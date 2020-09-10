@@ -1,0 +1,39 @@
+.container{
+    justify-content: center;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.buttonGroup{
+    justify-content: center;
+    text-align: center;
+    margin: 0 0 2% 40% !important;
+}
+ 
+.card{
+    margin: 0 0 2% 2% !important;
+}
+
+.carga{
+    border-bottom: 10px solid rgba(0,255,0,0.5);
+}
+
+.descarga{
+    border-bottom: 10px solid rgba(255,0,0,0.5); 
+}
+
+.usoPropio{
+    border-bottom: 10px solid rgba(0,0,0,0.5); 
+}
+
+.nubosidad{
+    border-bottom: 10px solid rgba(10,90,255,0.6);
+}
+
+.pv{
+    border-bottom: 10px solid rgba(255,255,0,0.8);
+}
+
+.temperatura{
+    border-bottom: 10px solid rgba(100,0,5,0.6);
+}
