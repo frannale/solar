@@ -1,7 +1,9 @@
 import React,{useEffect,useState} from "react";
 
-import Filter from "./Filter";
+import Filter from "../List/Filter";
 import  Selects  from "./Selects.jsx";
+import  Chart  from "./Chart";
+// import Chart from "./Filter";
 import {Typography } from "@material-ui/core";
 
 import axios from 'axios';
@@ -34,13 +36,14 @@ const TheChart = (props) => {
 	const [data, setData] = useState([]);
     const [dataAsked, setDataAsked] = useState(false);
     const [grouped, setGrouped] = useState('dia');
-    const [select, setSelect] = useState('dia');
     const [filterDates, setFilterDates] = useState({ from: pastMonth()   ,hasta : new Date()});
+    const [seleccionadosValues, setSeleccionadosValues] = useState([]);
+    const [selectOptions, setSelectOptions] = useState([]);
 
     const onFilteredHanlderDesde = (date) => {
         setFilterDates({...filterDates,['from']: date });
         setDataAsked(false);
-    }
+    };
 
     const onFilteredHanlderHasta = (date) => {
         
@@ -53,13 +56,23 @@ const TheChart = (props) => {
         setDataAsked(false);
     }
 
-    const onSelectChange = (newC) => {
-        useState({seleccionados: newC})
-        this.state = {
-          seleccionados : newC
-        };
-    
-        this.apppendData(this.getOnlyValues(this.state.seleccionados))
+    const onSelectChange = (item) => {
+        setSeleccionadosValues(item);
+      };
+
+    const getRowID = (row) => {
+        if(row.FECHA == undefined && row.HORA == undefined)
+            return  row.fecha != '-' ? (row.hora == '-' ? row.fecha :row.fecha +' '+ row.hora+'hs') : row.hora;
+        return  row.FECHA != '-' ? (row.HORA == '-' ? row.FECHA :row.FECHA +' '+ row.HORA+'hs') : row.HORA;
+      };
+
+    const getData = () => {
+        
+        
+        let selected_values = seleccionadosValues != null ? seleccionadosValues.map(s => s.value) : [];            
+        
+        return  data.filter(m => selected_values.includes(getRowID(m)) );
+        
       };
 
     useEffect(() => {
@@ -76,22 +89,28 @@ const TheChart = (props) => {
                 }
             })
 			.then(function(result){
-				let parsed_data =[]
-				result.data.data.map(function(row){
-					parsed_data.push(createData(row))
+                let parsed_data =[]
+                let parsed_select_options =[];
+                let data = result.data.data;
+				data.map(function(row){
+                    let id_value = getRowID(row);                 
+                    parsed_select_options.push({value: id_value, label: id_value});
+                    parsed_data.push(createData(row));
 				})
 				setDataAsked(true);
-				setData(parsed_data);
+                setData(parsed_data);
+                setSelectOptions(parsed_select_options);
+                setSeleccionadosValues(parsed_select_options.slice(0,2));       
 
 			});
 		}
-	});
+	},[filterDates,grouped]);
 
     return (
         <div>
             <Filter dates={filterDates} grouped={grouped} onFiltered={ {from: onFilteredHanlderDesde, hasta: onFilteredHanlderHasta,grouped: onFilteredGrouped} }/>   
-            <Typography variant="h5" color="textSecondary" gutterBottom>Tipo de dato</Typography>
-            <Selects selected={this.state.seleccionados} onChange={this.onChange} />
+            <Selects options={selectOptions} default={seleccionadosValues} onChange={onSelectChange} />
+            <Chart mediciones={getData()} />
         </div> 
         
     );

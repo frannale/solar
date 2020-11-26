@@ -23,7 +23,7 @@ const SelectMy = (props) => {
         <InputLabel htmlFor="outlined-age-native-simple">Agrupado</InputLabel>
         <Select
           native
-          value={props.groupedS}
+          value={props.grouped}
           onChange={props.onFiltered}
           label="Agrupado"
           inputProps={{
