@@ -14,6 +14,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # HABILITACION CORS
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
+
+@app.route('/', methods=['GET'])
+def home():
+  return render_template('index.html')
+
 # RUTA PARA CARGA DE DATOS
 @app.route('/cargarDatos', methods = ['POST'])
 def cargarDatos():

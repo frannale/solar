@@ -44,7 +44,7 @@ const styles = theme =>({
   },
 
   loginButton:{
-    background:"#e91e63",
+    background:"#389393",
     marginLeft: '20px',
     color:"#fff",
     marginTop: "15px",
@@ -52,7 +52,7 @@ const styles = theme =>({
     padding:"10px 30px",    
 
     '&:hover':{
-      background: 'blue',
+      background: '#db6400',
       boxShadow: "0px 2px 10px #888888"
     }
   }

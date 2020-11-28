@@ -1,7 +1,6 @@
 import { Bar } from "react-chartjs-2";
-import React,{useEffect,useState} from "react";
+import React from "react";
 import styles from "./Chart.module.css";
-import { fetchCharts } from "./../../api";
 
 
 const Charts = (props) => {
@@ -105,7 +104,7 @@ const Charts = (props) => {
               
               options={{
                 responsive: true,
-                aspectRatio: 1,
+                aspectRatio: 2,
                 scales: {
                   xAxes: [
                     {

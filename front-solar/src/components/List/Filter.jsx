@@ -12,7 +12,7 @@ const Filter = (props) => {
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
+      <Grid container style={{paddingBottom: '20px'}}  justify="space-around">
         <KeyboardDatePicker
           disableToolbar
           variant="inline"

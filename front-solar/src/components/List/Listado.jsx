@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react";
 
-import List from "./List";
+import Table from "./Table";
 import Filter from "./Filter";
 
 import axios from 'axios';
@@ -100,7 +100,8 @@ const Listado = (props) => {
     return (
         <div>
             <Filter dates={filterDates} grouped={grouped} onFiltered={ {from: onFilteredHanlderDesde, hasta: onFilteredHanlderHasta,grouped: onFilteredGrouped} }/>   
-            <List mediciones={data}/>
+            {/* <List mediciones={data}/> */}
+            <Table datos={data} ></Table>
         </div> 
         
     );
