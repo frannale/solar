@@ -31,7 +31,7 @@ const SendFileButton = (props) => {
 
     return (<FilePicker
                 className="button"
-                extensions={['text/csv']}
+                extensions={['text/csv','.csv','xlsx','text/comma-separated-values', 'application/csv', 'application/excel', 'application/vnd.ms-excel', 'application/vnd.msexcel']}
                 onChange={(file) => sendFileHandler(file)}
                 onError={error => { alert.show('El archivo debe ser de tipo CSV') }}
             >

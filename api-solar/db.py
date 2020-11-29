@@ -26,11 +26,12 @@ def makeModification(query):
 
         # Execute the create database SQL statment through the cursor instance
         cursorInsatnce.execute(sqlStatement)
-  
+        cursorInsatnce.execute("COMMIT")
+        print(query)
     except Exception as e:
         print("Exeception occured:{}".format(e))
         raise 
-
+        
     finally:
         connection.close()
     

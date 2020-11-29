@@ -5,7 +5,6 @@ import makeAnimated from 'react-select/animated';
 const Selects = (props) => {
 
 const handleChange = (selectedOption) => {
-  console.log(props.default);
   
   props.onChange(selectedOption);
     

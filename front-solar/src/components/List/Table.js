@@ -171,7 +171,6 @@ export default function Table(props){
         [data.length,el.fecha,el.hora, el.carga,el.descarga,el.uso_propio,
         el.pv,el.p_grid,el.p_inversor,parseFloat(el.pv_voltage),el.nubosidad,el.temperatura]
         );
-    console.log(data);
     return data;  
     }
 

@@ -14,7 +14,7 @@ const styles = theme =>({
     flexGrow:1,
   },
   container:{
-    width:'70%',
+    width:'90%',
     margin:"auto"
   },
   buttonFontSize:{

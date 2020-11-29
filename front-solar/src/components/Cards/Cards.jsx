@@ -33,7 +33,6 @@ const Cards = (props) => {
 				}
 			  })
 			.then(function(result){      
-				console.log(result.data.data[0].VALOR);
 				setData(result.data.data)
 		
 			});
