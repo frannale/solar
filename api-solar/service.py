@@ -11,7 +11,7 @@ def insertarDatos(filename):
     last_date = ''
     data_anterior = {'AccumulatedDischargerPower' : 0,'AccumulatedLoadPower' : 0,'AccumulatedSelfusePower' : 0,'AccumulatedPvPower' : 0}    
     #ABRO EL CSV FILE
-    dir_path = os.getcwd() + '/CSVFiles' + '/' + filename   
+    dir_path = os.getcwd() + '\CSVFiles' + "/" + filename   
     with open(dir_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         # PROCESO CADA REGISTRO
