@@ -27,9 +27,7 @@ def makeModification(query):
         # Execute the create database SQL statment through the cursor instance
         cursorInsatnce.execute(sqlStatement)
         cursorInsatnce.execute("COMMIT")
-        print(query)
-    except Exception as e:
-        print("Exeception occured:{}".format(e))
+    except:
         raise 
         
     finally:
@@ -49,8 +47,7 @@ def makeQuery(query):
         #Fetch all the rows
         databaseList = cursorInsatnce.fetchall()
 
-    except Exception as e:
-        print("Exeception occured:{}".format(e))
+    except:
         raise 
 
     finally:
@@ -71,7 +68,11 @@ def insert(row):
     query += str(row['PInverter']) +","
     query += str(row['PGrid']) +","
     query += str(row['Load percent']) +","
-    query += str(row['PV voltage']) +")"
+    query += str(row['PV voltage']) +","
+    query += str(row['ACM_AccumulatedDischargerPower']) +","
+    query += str(row['ACM_AccumulatedLoadPower']) +","
+    query += str(row['ACM_AccumulatedSelfusePower']) +","
+    query += str(row['ACM_AccumulatedPvPower']) +")"
 
     ok = makeModification(query)
     

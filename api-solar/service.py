@@ -9,9 +9,17 @@ def insertarDatos(filename):
     # SETEOS
     cargados,fallidos = 0,0
     last_date = ''
-    data_anterior = {'AccumulatedDischargerPower' : 0,'AccumulatedLoadPower' : 0,'AccumulatedSelfusePower' : 0,'AccumulatedPvPower' : 0}    
+    # BUSCO ULTIMOS DATOS
+    query = "SELECT * FROM SOLAR.MEDICION ORDER BY FECHA DESC,HORA DESC LIMIT 1"
+    data = db.makeQuery(query) 
+    print(data[0]["HORA"])
+    data_anterior = {'AccumulatedDischargerPower' : data[0]["ACM_DESCARGA"],
+                     'AccumulatedLoadPower' : data[0]["ACM_CARGA"],
+                     'AccumulatedSelfusePower' : data[0]["ACM_USO_PROPIO"],
+                     'AccumulatedPvPower' : data[0]["ACM_PV"]
+                     }    
     #ABRO EL CSV FILE
-    dir_path = os.getcwd() + '\CSVFiles' + "/" + filename   
+    dir_path = os.getcwd() + '/CSVFiles' + "/" + filename   
     with open(dir_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         # PROCESO CADA REGISTRO
@@ -21,10 +29,9 @@ def insertarDatos(filename):
             if last_date != current_date[0:10]:
                 clima_por_hora = weather.getWeather(current_date)
             last_date = current_date[0:10]                
-            # PROCESO DE A 1 REGISTRO     
-            data_anterior = procesarUno(row,clima_por_hora,data_anterior)
             try:
-                
+                # PROCESO DE A 1 REGISTRO     
+                data_anterior = procesarUno(row,clima_por_hora,data_anterior)
                 cargados += 1
             except:
                 fallidos += 1    
@@ -32,12 +39,14 @@ def insertarDatos(filename):
     return cargados,fallidos
 
 def procesarUno(row,clima,data_anterior):
-    #SETEO DE NUEVO REGISTRO Y INICIALIZACION DE ACUMULABLES
+    #SETEO DE NUEVO REGISTRO
     new_row =  {}
     # VERIFICACION POR CADA ACUMULATED PARA HACER EL CALCULO
     for key in data_anterior:
         current_value = round(Decimal(row[key].replace('KWH','')),3)
-        new_row[key] = current_value - data_anterior[key]
+        new_row['ACM_' + key] = current_value
+        # SI LA DIFERENCIA ES MAYOR AL ACUMULADO ALGO ANDA MAL
+        new_row[key] = (current_value - data_anterior[key]) if (current_value >= data_anterior[key]) else current_value
         data_anterior[key] = current_value     
     new_row['PInverter'] = row['PInverter']  
     new_row['PGrid'] = row['PGrid']
@@ -63,8 +72,6 @@ def formatearHora(i_hora):
         hora_a_p += 12      
     
     return hora_a_p
-
-
 
 def getAllMediciones(args):
 
